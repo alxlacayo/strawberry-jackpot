@@ -14,7 +14,7 @@ const config = {
     },
     production: {
         address: "0xdd52510528c2BC06CeB9551FEcca0E87b3E54c30",
-        chainId: 1,
+        chainId: 4,
         networkId: 4
     },
     abi: [
