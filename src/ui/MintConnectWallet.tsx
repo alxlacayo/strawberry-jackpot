@@ -32,7 +32,7 @@ export default function ConnectWallet({ connectionService }: Props): JSX.Element
                 <li onClick={connectToCoinbaseWallet}><img src="../../assets/coinbasewallet.png" alt="coinbase wallet" />Coinbase Wallet</li>
                 <li onClick={connectToWalletConnect}><img src="../../assets/walletconnect.png" alt="walletconnect" />WalletConnect</li>
             </ul>
-            {errorMessage && <ErrorMessage>🚨 {errorMessage}</ErrorMessage>}
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         </Container>
     );
 }
