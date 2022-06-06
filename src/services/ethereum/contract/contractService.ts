@@ -37,6 +37,15 @@ const initialState: Readonly<ContractState> = {
     freeMintsAvailable: 0
 };
 
+console.log({
+    alchemy: process.env.REACT_APP_ALCHEMY_ID,
+    etherscan: process.env.REACT_APP_ETHERSCAN_ID,
+    infura: process.env.REACT_APP_INFURA_ID,
+    pocket: process.env.REACT_APP_POCKET_ID
+});
+
+console.log(process.env.NODE_ENV);
+
 export function makeUseContractService(): UseContractService {
     const provider = ethers.getDefaultProvider(contractInfo.networkId, {
         alchemy: process.env.REACT_APP_ALCHEMY_ID,
@@ -80,6 +89,7 @@ export function makeUseContractService(): UseContractService {
         await fetchState();
         addListeners();
     };
+
     const fetchState = async () => {
         setState({
             mintPrice: ethers.utils.formatEther((await contract.mintPrice() as BigNumber)),
