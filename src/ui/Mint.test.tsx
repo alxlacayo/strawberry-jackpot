@@ -1,0 +1,98 @@
+import { render, screen, waitFor } from "@testing-library/react";
+import { mockEthereum } from "../services/ethereum/providers/mock";
+import contractInfo from "../config/contract";
+import Mint from "./Mint";
+import type { ConnectionState, ConnectionService } from "../services/ethereum";
+
+const connectionState: ConnectionState = {
+    ethereum: null,
+    account: null,
+    chainId: null
+};
+
+const connectionSerivce: ConnectionService = {
+    connect: function (wallet: string, method?: string): Promise<void> {
+        throw new Error("Function not implemented.");
+    },
+    disconnect: function (): void {
+        throw new Error("Function not implemented.");
+    },
+    switchChain: function (chainId: string): Promise<void> {
+        throw new Error("Function not implemented.");
+    },
+    isProviderAvailable: function (providerId: string): boolean {
+        throw new Error("Function not implemented.");
+    },
+    getState: function (): ConnectionState {
+        throw new Error("Function not implemented.");
+    },
+    addListener: function (eventName: string | symbol, listener: (...args: any[]) => void): ConnectionService {
+        throw new Error("Function not implemented.");
+    },
+    on: function (eventName: string | symbol, listener: (...args: any[]) => void): ConnectionService {
+        throw new Error("Function not implemented.");
+    },
+    once: function (eventName: string | symbol, listener: (...args: any[]) => void): ConnectionService {
+        throw new Error("Function not implemented.");
+    },
+    removeListener: function (eventName: string | symbol, listener: (...args: any[]) => void): ConnectionService {
+        throw new Error("Function not implemented.");
+    },
+    off: function (eventName: string | symbol, listener: (...args: any[]) => void): ConnectionService {
+        throw new Error("Function not implemented.");
+    },
+    removeAllListeners: function (event?: string | symbol): ConnectionService {
+        throw new Error("Function not implemented.");
+    },
+    setMaxListeners: function (n: number): ConnectionService {
+        throw new Error("Function not implemented.");
+    },
+    getMaxListeners: function (): number {
+        throw new Error("Function not implemented.");
+    },
+    listeners: function (eventName: string | symbol): Function[] {
+        throw new Error("Function not implemented.");
+    },
+    rawListeners: function (eventName: string | symbol): Function[] {
+        throw new Error("Function not implemented.");
+    },
+    emit: function (eventName: string | symbol, ...args: any[]): boolean {
+        throw new Error("Function not implemented.");
+    },
+    listenerCount: function (eventName: string | symbol): number {
+        throw new Error("Function not implemented.");
+    },
+    prependListener: function (eventName: string | symbol, listener: (...args: any[]) => void): ConnectionService {
+        throw new Error("Function not implemented.");
+    },
+    prependOnceListener: function (eventName: string | symbol, listener: (...args: any[]) => void): ConnectionService {
+        throw new Error("Function not implemented.");
+    },
+    eventNames: function (): (string | symbol)[] {
+        throw new Error("Function not implemented.");
+    }
+};
+
+describe("when mint renders", () => {
+    test("should display mint login component", () => {
+        render(<Mint connectionState={connectionState} connectionService={connectionSerivce} />);
+        const button = screen.getByText("Connect");
+        expect(button).toBeInTheDocument();
+    });
+
+    test("should display mint switch chain component", () => {
+        const _connectionData = { ...connectionState, account: "0xdead" };
+        render(<Mint connectionState={_connectionData} connectionService={connectionSerivce} />);
+        const button = screen.getByText("Switch network");
+        expect(button).toBeInTheDocument();
+    });
+
+    test("should display mint form component", () => {
+        const _connectionData = { ethereum: mockEthereum, account: "0xdead", chainId: contractInfo.chainId };
+        render(<Mint connectionState={_connectionData} connectionService={connectionSerivce} />);
+        waitFor(() => {
+            const button = screen.getByText("Mint");
+            expect(button).toBeInTheDocument();
+        });
+    });
+});
