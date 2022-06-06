@@ -91,11 +91,12 @@ export function makeUseContractService(): UseContractService {
     };
 
     const fetchState = async () => {
+        // change this to promise all
         setState({
             mintPrice: ethers.utils.formatEther((await contract.mintPrice() as BigNumber)),
-            maxSupply: (await contract.MAX_SUPPLY() as BigNumber).toNumber(),
-            totalMinted: (await contract.totalMinted() as BigNumber).toNumber(),
-            freeMintsAvailable: (await contract.freeMintsAvailable() as BigNumber).toNumber()
+            // maxSupply: (await contract.MAX_SUPPLY() as BigNumber).toNumber(),
+            // totalMinted: (await contract.totalMinted() as BigNumber).toNumber(),
+            // freeMintsAvailable: (await contract.freeMintsAvailable() as BigNumber).toNumber()
         });
     };
 
