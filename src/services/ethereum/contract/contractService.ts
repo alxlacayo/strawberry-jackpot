@@ -1,5 +1,5 @@
 import EventEmitter from "events";
-import { ethers, Contract, type BigNumber } from "ethers";
+import { ethers, Contract, BigNumber } from "ethers";
 import { JsonRpcProvider, type Web3Provider } from "@ethersproject/providers";
 import contractInfo from "../../../config/contract";
 import makeState from "../state";
@@ -37,23 +37,15 @@ const initialState: Readonly<ContractState> = {
     freeMintsAvailable: 0
 };
 
-console.log({
-    alchemy: process.env.REACT_APP_ALCHEMY_ID,
-    etherscan: process.env.REACT_APP_ETHERSCAN_ID,
-    infura: process.env.REACT_APP_INFURA_ID,
-    pocket: process.env.REACT_APP_POCKET_ID
-});
-
-console.log(process.env.NODE_ENV);
-
 export function makeUseContractService(): UseContractService {
-    const provider = ethers.getDefaultProvider(contractInfo.networkId, {
-        alchemy: process.env.REACT_APP_ALCHEMY_ID,
-        etherscan: process.env.REACT_APP_ETHERSCAN_ID,
-        infura: process.env.REACT_APP_INFURA_ID,
-        pocket: process.env.REACT_APP_POCKET_ID
-        // pocket: "169befa4b389b2a654367207556a6f8f4d07e6a7a828f88dc742798c9b01a5cd"
-    });
+    // const provider = ethers.getDefaultProvider(contractInfo.networkId, {
+    //     alchemy: process.env.REACT_APP_ALCHEMY_ID,
+    //     etherscan: process.env.REACT_APP_ETHERSCAN_ID,
+    //     infura: process.env.REACT_APP_INFURA_ID,
+    //     pocket: process.env.REACT_APP_POCKET_ID
+    // });
+
+    const provider = new ethers.providers.AlchemyProvider(contractInfo.networkId, process.env.REACT_APP_ALCHEMY_ID);
 
     const contract = new Contract(contractInfo.address, contractInfo.abi, provider);
 
@@ -91,12 +83,17 @@ export function makeUseContractService(): UseContractService {
     };
 
     const fetchState = async () => {
-        // change this to promise all
+        const [mintPrice, maxSupply, totalMinted, freeMintsAvailable] = await Promise.all([
+            contract.mintPrice() as BigNumber,
+            contract.MAX_SUPPLY() as BigNumber,
+            contract.totalMinted() as BigNumber,
+            contract.freeMintsAvailable() as BigNumber     
+        ]);
         setState({
-            mintPrice: ethers.utils.formatEther((await contract.mintPrice() as BigNumber)),
-            // maxSupply: (await contract.MAX_SUPPLY() as BigNumber).toNumber(),
-            // totalMinted: (await contract.totalMinted() as BigNumber).toNumber(),
-            // freeMintsAvailable: (await contract.freeMintsAvailable() as BigNumber).toNumber()
+            mintPrice: ethers.utils.formatEther(mintPrice),
+            maxSupply: maxSupply.toNumber(),
+            totalMinted: totalMinted.toNumber(),
+            freeMintsAvailable: freeMintsAvailable.toNumber()
         });
     };
 
