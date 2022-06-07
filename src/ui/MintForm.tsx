@@ -78,11 +78,7 @@ export default function MintForm({ contractService, contractState }: Props): JSX
                             <Quantity>{quantity}</Quantity>
                             <Adjuster onClick={increment}><img src="/assets/add.svg" alt="subtract" /></Adjuster>
                         </QuantityInput>
-                        <Button className="mint-button" onClick={handleMint}>Mint</Button>
-                        {(isSoldOutOfFreebies)
-                            ? <Button>Free mints all gone</Button>
-                            : <Button onClick={handleFreeMint}>Free mint (2)</Button>
-                        }
+                        <Button className="mint-button" onClick={handleMint}>Mint free</Button>
                     </>
                 }
                 {isSoldOut && <Button>Sold out</Button>}

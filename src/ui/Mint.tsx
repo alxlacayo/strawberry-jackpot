@@ -43,11 +43,9 @@ export default function Mint({ connectionState, connectionService }: Props): JSX
                 </Showcase>
                 <DetailsContainer>
                     <h1>I Fkin Did It</h1>
-                    <Description>A collection of 2,222 angry crypto bros that couldn't handle the bear market and made good on their promise to chop it. All metadata is permanently stored on IPFS. There are 1,000 free mints available, two per wallet.</Description>
+                    <Description>A collection of 2,222 angry crypto bros that couldn't handle the bear market and made good on their promise to chop it. All metadata is permanently stored on IPFS. Max 20 per transaction.</Description>
                     <ul>
-                        <li>Mint price: {contractState.mintPrice}</li>
                         <li>Total minted: {contractState.totalMinted} / {contractState.maxSupply}</li>
-                        <li>Free mints left: {contractState.freeMintsAvailable}</li>
                     </ul>
                     {component}
                 </DetailsContainer>
