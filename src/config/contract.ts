@@ -13,7 +13,7 @@ const config = {
         networkId:  "http://localhost:8545"
     },
     production: {
-        address: "0x3E07Bd0074dC922319Ef039f07BEaD729867F087",
+        address: "0x9153cC02Cb1A6061e972110aD36De6B0FB79bbf2",
         chainId: 4,
         networkId: 4
     },
