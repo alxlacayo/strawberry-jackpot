@@ -13,9 +13,9 @@ const config = {
         networkId:  "http://localhost:8545"
     },
     production: {
-        address: "0x9153cC02Cb1A6061e972110aD36De6B0FB79bbf2",
-        chainId: 4,
-        networkId: 4
+        address: "0x8d8770Eaf2EA1cB90c8C7e5740393Ebc58611bba",
+        chainId: 1,
+        networkId: 1
     },
     abi: [
         "function MAX_SUPPLY() external view returns (uint256)",
