@@ -8,13 +8,18 @@ export {
 } from "./connection/connectionService";
 
 export {
-    makeUseContractService,
-    useContractService,
-    type UseContractService,
-    type ContractService,
-    type ContractState,
-    type TransactionReceipt
-} from "./contract/contractService";
+    makeUseStrawberryJackpotService,
+    type UseStrawberryJackpotService,
+    type StrawberryJackpotService,
+    type StrawberryJackpotState
+} from "./contract/strawberryJackpotService";
+
+export {
+    makeUseStrawberryService,
+    type UseStrawberryService,
+    type StrawberryService,
+    type StrawberryState,
+} from "./contract/strawberryService";
 
 export {
     ethereumProviders,
@@ -27,3 +32,5 @@ export type {
     EthereumProvider,
     EthereumProviders
 } from "./types";
+
+export type { TransactionReceipt } from "@ethersproject/abstract-provider";

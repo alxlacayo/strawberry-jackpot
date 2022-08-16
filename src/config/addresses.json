@@ -1,0 +1,10 @@
+{
+    "localhost": {
+        "strawberryAddress": "",
+        "strawberryJackpotAddress": ""
+    },
+    "mumbai": {
+        "strawberryAddress": "",
+        "strawberryJackpotAddress": ""
+    }
+}

@@ -47,24 +47,3 @@ describe("when mint() is called", () => {
         }, { timeout: 15000 });
     }, 20000);
 });
-
-// describe("when freeMint() is called", () => {
-//     test("should should update state", async () => {
-//         const { result } = renderHook(() => useContractService(jsonRpcProvider));
-//         let state: ContractState;
-//         result.current.once("stateChanged", (_state: ContractState): void => { state = _state });
-//         await waitFor(() => {
-//             expect(state.totalMinted).toBeGreaterThanOrEqual(0);
-//             expect(state.freeMintsAvailable).toBeGreaterThanOrEqual(0);
-//         });
-//         await waitFor(async () => {
-//             const transactionReceipt = await result.current.freeMint();
-//             expect(transactionReceipt.transactionHash).toBeDefined();
-//         });
-//         const freeMintQuantity = 1;
-//         await waitFor(() => {
-//             expect(result.current.getState().totalMinted).toBe(state.totalMinted + freeMintQuantity);
-//             expect(result.current.getState().freeMintsAvailable).toBe(state.freeMintsAvailable - freeMintQuantity);
-//         }, { timeout: 15000 });
-//     }, 20000);
-// });

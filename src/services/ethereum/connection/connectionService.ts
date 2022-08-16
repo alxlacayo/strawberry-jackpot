@@ -1,6 +1,7 @@
 import EventEmitter from "events";
 import makeState from "../state";
-import type { Provider, EthereumProviders, EthereumProvider } from "../types";
+import chains from "../chains";
+import type { Provider, AddEthereumChainParameter, EthereumProviders, EthereumProvider } from "../types";
 
 export const PROVIDER_ID_STORAGE_KEY = "providerId";
 
@@ -11,6 +12,7 @@ export interface ConnectionState {
 }
 
 export interface ConnectionService extends EventEmitter {
+    addChain(chainName: string): Promise<void>;
     connect(providerId: string, method?: string): Promise<void>;
     disconnect(): void;
     isProviderAvailable(providerId: string): boolean;
@@ -27,16 +29,14 @@ const initialState: Readonly<ConnectionState> = {
 };
 
 export function makeUseConnectionService(): UseConnectionService {
+    const emitter = new EventEmitter();
+    
     let ethereumProviders: EthereumProviders;
     let ethereumProvider: EthereumProvider | null;
 
-    const emitter = new EventEmitter();
-
-    const handleStateChanged = (state: ConnectionState): void => {
-        emitter.emit("stateChanged", state);
-    };
-
-    const [state, setState] = makeState<ConnectionState>(initialState, handleStateChanged);
+    const [state, setState] = makeState(initialState, (state: ConnectionState): void => {
+        emitter.emit("StateChanged", state);
+    });
 
     const handleAccountsChanged = ([account]: string[]): void => {
         if (!account) {
@@ -62,9 +62,7 @@ export function makeUseConnectionService(): UseConnectionService {
         state.ethereum!.removeListener("chainChanged", handleChainChanged);
     };
 
-    const getState = (): ConnectionState => {
-        return { ...state };
-    };
+    const getState = (): ConnectionState => ({ ...state });
 
     const getEthereumProviderById = (providerId: string): EthereumProvider => {
         if (!ethereumProviders[providerId]) {
@@ -99,8 +97,14 @@ export function makeUseConnectionService(): UseConnectionService {
         window.localStorage.removeItem(PROVIDER_ID_STORAGE_KEY);
     };
 
-    const switchChain = async (chainIdInHex: string): Promise<void> => {
-        await ethereumProvider!.switchChain(chainIdInHex);
+    const switchChain = async (chainName: string): Promise<void> => {
+        const chainId = chains[chainName].chainId;
+        await ethereumProvider!.switchChain(chainId);
+    };
+
+    const addChain = async (chainName: string): Promise<void> => {
+        const chain = chains[chainName] as AddEthereumChainParameter;
+        await ethereumProvider!.addChain(chain);
     };
 
     const isProviderAvailable = (providerId: string): boolean => {
@@ -108,6 +112,7 @@ export function makeUseConnectionService(): UseConnectionService {
     };
 
     const connectionService: ConnectionService = Object.assign(emitter, {
+        addChain,
         connect,
         disconnect,
         getState,

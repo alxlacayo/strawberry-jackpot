@@ -1,4 +1,4 @@
-export const getErrorMessage = (error: any): string => {
+export const handleErrorMessage = (error: any): string => {
     let message = (error && error.message) || "Something broke wth...";
     if (error.reason) {
         const match = (error.reason as string).match(/'.*'/);

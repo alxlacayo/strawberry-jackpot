@@ -1,6 +1,5 @@
-import React, { useEffect, ReactNode, type EffectCallback } from "react";
 import ReactDOM from "react-dom";
-import Container from "./Modal.styled";
+import { useEffect, type ReactNode, type EffectCallback } from "react";
 import ModalContent from "./ModalContent";
 
 interface Props {
@@ -9,9 +8,9 @@ interface Props {
 }
 
 export default function Modal({ children, close }: Props): JSX.Element {
-    const portal = <Container onClick={close}>
-            <ModalContent children={children} close={close} />
-    </Container>;
+    const portal = <div onClick={close}>
+        <ModalContent children={children} close={close} />
+    </div>;
 
     useEffect((): ReturnType<EffectCallback> => {
         const handleKeyDown = (event: KeyboardEvent): void => {

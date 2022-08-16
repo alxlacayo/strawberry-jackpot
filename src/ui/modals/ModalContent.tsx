@@ -1,5 +1,4 @@
 import { ReactNode, type MouseEvent } from "react";
-import Container from "./ModalContent.styled";
 
 interface Props {
     children: ReactNode,
@@ -12,7 +11,7 @@ export default function ModalContent({ children, close }: Props): JSX.Element {
     };
 
     return (
-        <Container onClick={preventClose}>
+        <div onClick={preventClose}>
             <img
                 className="close"
                 src="../../assets/close.svg"
@@ -20,6 +19,6 @@ export default function ModalContent({ children, close }: Props): JSX.Element {
                 onClick={close}
             />
             {children}
-        </Container>
+        </div>
     );
 }

@@ -77,7 +77,7 @@ describe("when switchChain() is called", () => {
 describe("when accountsChanged event is emitted", () => {
     test("should update account", async () => {
         const { result } = renderHook(() => useConnectionService(ethereumProviders));
-        const someEthAddress = "0x3E3BD2d9F2267533A4d340254Ed309347502e801";
+        const someEthAddress = "0x1E3BD2d9F2227533A4d376254Ed309847502b801";
         await act(() => result.current.connect(PROVIDER_ID));
         act(() => void result.current.getState().ethereum!.emit("accountsChanged", [someEthAddress]));
         expect(result.current.getState().account).toBe(someEthAddress);

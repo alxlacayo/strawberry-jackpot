@@ -1,7 +1,3 @@
-import Container from "./Transaction.styled";
-import UnderlinedButton from "../elements/UnderlinedButton.styled"
-import ErrorMessage from "../elements/ErrorMessage.styled";
-
 interface Props {
     chainId: number;
     transactionHash: string | undefined;
@@ -16,21 +12,21 @@ export default function Transaction({ chainId, transactionHash, errorMessage }: 
     };
 
     return (
-        <Container>
+        <>
             {!transactionHash &&
                 <>
                     <h2>{errorMessage ? "Error" : "Confirm transaction"}</h2>
                     {!errorMessage && <span>(awaiting confirmation...)</span>}
-                    {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+                    {errorMessage && <span>{errorMessage}</span>}
                 </>
             }
             {transactionHash &&
                 <>
                     <h2>Success</h2>
                     <span>Your transaction has been confirmed on the blockchain.</span>
-                    <UnderlinedButton as="a" href={getEtherscanUrl()} target="_blank">View on etherscan</UnderlinedButton>
+                    {/* <UnderlinedButton as="a" href={getEtherscanUrl()} target="_blank">View on etherscan</UnderlinedButton> */}
                 </>
             }
-        </Container>
+        </>
     );
 }

@@ -6,7 +6,7 @@ import type {
     Provider
 } from "../types";
 
-const ETH_ADDRESS = "0x6e149BFc5cf4Bd41a07Be259066a1E787972243b";
+const ETH_ADDRESS = "0x1e149BFc5cf4Bd41a07Be381064c1E788132253c";
 const TIMEDELAY = 100;
 
 export const mockEthereum: Provider = Object.assign(new EventEmitter(), {
